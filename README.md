@@ -6,7 +6,7 @@ Este repositorio contiene el análisis de la simulación de un rover equipado co
 ## Estructura
 Para el desarrollo de la práctica se han hecho uso de los siguientes paquetes:
 - `rover_description`: contiene la descripción URDF/Xacro del rover al completo, los controladores de la base y dos de los launchers usados: `robot_state_publisher.launch.py` y `rover_controllers.launch.py`
-- `rover_moveit_config`: contiene la configuración hecha con MoveIt Setup Assistant, con eel tercer launcher usado, necesario para usar el plugin de MoveIt en RViz: `move_group.launch.py`
+- `rover_moveit_config`: contiene la configuración hecha con MoveIt Setup Assistant, con el tercer launcher usado, necesario para usar el plugin de MoveIt en RViz: `move_group.launch.py`
 - `urjc-excavation-world`: contiene el mundo de Gazebo usado. [(enlace)](https://github.com/juanscelyg/urjc-excavation-world)
 
 ## Robot en RViz

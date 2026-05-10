@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- Rover description - archivo raiz del robot -->
+<robot name="rover" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="robot_ns" default=""/>
+  <xacro:arg name="config_controllers" default="$(find rover_description)/config/rover_controllers.yaml"/>
+  <xacro:arg name="update_rate" default="100"/>
+
+  <!-- Utilidades (macros de inercia) -->
+  <xacro:include filename="$(find rover_description)/urdf/utils/utils.urdf.xacro"/>
+
+  <!-- Base (base_footprint -> base_link -> pedestal_link) -->
+  <xacro:include filename="$(find rover_description)/urdf/base/robot_base.urdf.xacro"/>
+
+  <!-- Ruedas -->
+  <xacro:include filename="$(find rover_description)/urdf/wheels/rover_wheels.urdf.xacro"/>
+
+  <xacro:rover_wheel prefix="front_right" x_pos="1.20032" y_pos="-0.78480" mesh_file="Torus.001.dae"/>
+  <xacro:rover_wheel prefix="front_left"  x_pos="1.20032" y_pos="0.78480"  mesh_file="Torus.dae"/>
+
+  <xacro:rover_wheel prefix="back_right" x_pos="-1.20032" y_pos="-0.78480" mesh_file="Torus.002.dae"/>
+  <xacro:rover_wheel prefix="back_left"  x_pos="-1.20032" y_pos="0.78480"  mesh_file="Torus.003.dae"/>
+
+  <!-- Brazo SCARA -->
+  <xacro:include filename="$(find rover_description)/urdf/arm/scara.urdf.xacro"/>
+
+  <!-- Gripper -->
+  <xacro:include filename="$(find rover_description)/urdf/arm/gripper.urdf.xacro"/>
+
+  <!-- Sensores (IMU + camaras) -->
+  <xacro:include filename="$(find rover_description)/urdf/sensors/sensors.urdf.xacro"/>
+  <xacro:rover_sensors prefix="$(arg prefix)"/>
+
+  <!-- ROS 2 Control -->
+  <xacro:include filename="$(find rover_description)/urdf/ros2_control.urdf.xacro"/>
+  <xacro:ros2_control/>
+
+</robot>

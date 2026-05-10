@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- BRAZO SCARA  (eslabones brazo1 y brazo2 + soporte gripper)
+       Padre del primer eslabon: pedestal_link  (definido en base) -->
+
+  <!-- Eslabon 1 (giro Z, rotacion horizontal) -->
+  <joint name="joint_0" type="revolute">
+    <origin xyz="0 -0.02427 1.86892" rpy="0 0 0"/>
+    <parent link="pedestal_link"/>
+    <child  link="brazo1_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.28" upper="6.28" effort="1000.0" velocity="100.0"/>
+  </joint>
+
+  <link name="brazo1_link">
+    <visual name="brazo1">
+      <material name="None"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rover_description/meshes/dae/Cylinder.001.dae"
+              scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="brazo1_collision">
+      <origin xyz="0 0.663 0" rpy="0 0 0"/>
+      <geometry><box size="0.15 1.33 0.15"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0.67590 0" rpy="0 0 0"/>
+      <mass value="3.0"/>
+      <inertia ixx="0.60756" ixy="0" ixz="0"
+               iyy="0.10387" iyz="0"
+               izz="0.70353"/>
+    </inertial>
+  </link>
+
+  <!-- Eslabon 2 (giro Z, rotacion horizontal) -->
+  <joint name="joint_1" type="revolute">
+    <origin xyz="0 1.32604 0.12417" rpy="0 0 0"/>
+    <parent link="brazo1_link"/>
+    <child  link="brazo2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.5" upper="2.5" effort="1000.0" velocity="100.0"/>
+  </joint>
+
+  <link name="brazo2_link">
+    <visual name="brazo2">
+      <material name="None"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rover_description/meshes/dae/Cylinder.002.dae"
+              scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="brazo2_collision">
+      <origin xyz="0 0.686 0" rpy="0 0 0"/>
+      <geometry><box size="0.15 1.37 0.15"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0.73617 0" rpy="0 0 0"/>
+      <mass value="2.0"/>
+      <inertia ixx="0.40504" ixy="0" ixz="0"
+               iyy="0.06925" iyz="0"
+               izz="0.46902"/>
+    </inertial>
+  </link>
+
+  <!-- Rotacion del gripper (giro Z) -->
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0 1.37257 0" rpy="0 0 0"/>
+    <parent link="brazo2_link"/>
+    <child  link="gripper_rot_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.5" upper="2.5" effort="1000.0" velocity="100.0"/>
+  </joint>
+
+  <link name="gripper_rot_link">
+    <visual name="gripper_rot">
+      <material name="None"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rover_description/meshes/dae/Cylinder.003.dae"
+              scale="1 1 0.23333"/>
+      </geometry>
+    </visual>
+    <collision name="gripper_rot_collision">
+      <origin xyz="0 0.00318 -0.11670" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.70"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0.01050 -0.51237" rpy="0 0 0"/>
+      <mass value="1.01"/>
+      <inertia ixx="0.75240" ixy="0" ixz="0"
+               iyy="0.75240" iyz="0.00060"
+               izz="0.00379"/>
+    </inertial>
+  </link>
+
+  <!-- Traslacion del gripper (prismatica Z) -->
+  <joint name="joint_3" type="prismatic">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="gripper_rot_link"/>
+    <child  link="gripper_tras_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.40" upper="1.70" effort="1000.0" velocity="100.0"/>
+  </joint>
+
+  <link name="gripper_tras_link">
+    <visual name="Cylinder">
+      <material name="None"/>
+      <origin xyz="0 0 -1.02339" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rover_description/meshes/dae/Cylinder.006.dae"
+              scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="Cylinder_collision">
+      <origin xyz="0 0 -1.02339" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rover_description/meshes/dae/Cylinder.006.dae"
+              scale="1 1 1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 -1.02339" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.08" ixy="0" ixz="0"
+               iyy="0.08" iyz="0"
+               izz="0.002"/>
+    </inertial>
+  </link>
+
+</robot>

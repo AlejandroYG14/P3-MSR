@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- Macro: inercia de un cuboide solido -->
+  <xacro:macro name="solid_cuboid_inertia" params="m w h d">
+    <inertia ixx="${(m*(h*h+d*d))/12}" ixy="0" ixz="0"
+             iyy="${(m*(w*w+d*d))/12}" iyz="0"
+             izz="${(m*(w*w+h*h))/12}"/>
+  </xacro:macro>
+
+  <!-- Macro: inercia de un cilindro solido (eje Z) -->
+  <xacro:macro name="solid_cylinder_inertia" params="m r h">
+    <inertia ixx="${(m*(3*r*r+h*h))/12}" ixy="0" ixz="0"
+             iyy="${(m*(3*r*r+h*h))/12}" iyz="0"
+             izz="${(m*r*r)/2}"/>
+  </xacro:macro>
+
+  <!-- Macro: link dummy (masa e inercia nulas) -->
+  <xacro:macro name="dummy_inertial">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0"
+               iyy="0.0001" iyz="0"
+               izz="0.0001"/>
+    </inertial>
+  </xacro:macro>
+
+</robot>

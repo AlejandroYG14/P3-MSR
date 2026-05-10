@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="camera_sensor"
+        params="prefix parent horizontal_fov:=90 video_width:=640 video_height:=480 *origin">
+
+        <link name="${prefix}link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.05 0.10 0.05"/>
+                </geometry>
+                <material name="${prefix}color">
+                    <color rgba="0.1 0.1 0.1 1.0"/>
+                </material>
+            </visual>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.05"/>
+                <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}link"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+
+        <link name="${prefix}optical_frame"/>
+
+        <joint name="${prefix}optical_joint" type="fixed">
+            <parent link="${prefix}link"/>
+            <child link="${prefix}optical_frame"/>
+            <origin xyz="0 0 0" rpy="-1.57080 0 -1.57080"/>
+        </joint>
+
+        <gazebo reference="${prefix}link">
+            <sensor name="${prefix}sensor" type="camera">
+                <visualize>true</visualize>
+                <update_rate>30</update_rate>
+                <topic>/${prefix}image</topic>
+                <camera>
+                    <horizontal_fov>${radians(float(horizontal_fov))}</horizontal_fov>
+                    <image>
+                        <width>${video_width}</width>
+                        <height>${video_height}</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.10</near>
+                        <far>15.0</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                    <optical_frame_id>${prefix}optical_frame</optical_frame_id>
+                </camera>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

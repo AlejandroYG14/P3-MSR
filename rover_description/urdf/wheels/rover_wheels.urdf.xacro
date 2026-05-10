@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="rover_wheel" params="prefix x_pos y_pos mesh_file">
+    
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <origin xyz="${x_pos} ${y_pos} -0.73272" rpy="0 -1.5708 -1.5708"/>
+      <parent link="base_link"/>
+      <child  link="${prefix}_wheel_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="1000.0" velocity="100.0"/>
+    </joint>
+
+    <link name="${prefix}_wheel_link">
+      <visual name="${prefix}_wheel">
+        <material name="None"/>
+        <origin xyz="0 0 0" rpy="3.14159 0 3.14159"/>
+        <geometry>
+          <mesh filename="package://rover_description/meshes/dae/${mesh_file}" scale="0.2 0.2 0.4"/>
+        </geometry>
+      </visual>
+      <collision name="${prefix}_wheel_collision">
+        <origin xyz="0 0 0" rpy="3.14159 0 3.14159"/>
+        <geometry>
+          <mesh filename="package://rover_description/meshes/dae/${mesh_file}" scale="0.2 0.2 0.4"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.05865" ixy="0" ixz="0"
+                 iyy="0.03326" iyz="0"
+                 izz="0.03326"/>
+      </inertial>
+    </link>
+
+  </xacro:macro>
+
+</robot>

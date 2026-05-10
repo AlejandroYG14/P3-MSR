@@ -21,7 +21,7 @@ Este es el árbol de transformadas: [tf_tree](data/tf_tree.pdf)
 El propósito de la simulación consiste en ejecutar una secuencia de tres tareas operativas:
 - Almacenar el cubo verde en el compartimento de carga del rover.
 - Realizar una maniobra de pick and place para trasladar el cubo azul (situado a la izquierda) y apilarlo sobre el cubo rojo (ubicado a la derecha).
-- Ejecutar un desplazamiento de traslación en línea recta
+- Ejecutar un desplazamiento en línea recta usando `teleop_twist_keyboard` para publicar comandos de velocidad en `/cmd_vel`
 
 ### Cubo verde sujeto en el aire
 <img width="721" height="680" alt="cubo_verde" src="https://github.com/user-attachments/assets/1493bb42-c404-42f8-b7ee-2fc93c1da0f2" />
